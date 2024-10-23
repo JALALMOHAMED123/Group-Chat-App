@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         const errorMessage = document.getElementById('error-message');
         errorMessage.textContent = '';
-        axios.post('/signup', data)
+        axios.post('/signup', data) 
             .then(function(response){
                 alert(response.data.message);
                 document.getElementById('form').reset();

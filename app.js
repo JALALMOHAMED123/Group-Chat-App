@@ -3,11 +3,17 @@ const bodyParser=require('body-parser');
 const path = require('path');
 const userRoutes=require('./routes/user_routes');
 const sequelize=require('./util/db');
+const cors=require('cors');
 // const User=require('./models/user');
 
 const dotenv=require('dotenv');
 dotenv.config();
 const app=express();
+
+app.use(cors({
+    origin: "http://127.0.0.1:5500/"
+    // methods: ["GET","PUT"]
+}))
 
 app.use(bodyParser.urlencoded({extended: false}));
 

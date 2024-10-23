@@ -8,19 +8,19 @@ exports.postsignup=async(req,res)=>{
         const userexist=await User.findOne({ where: {email}});
         const usernumber=await User.findOne({ where: {number}});
 
-        if(userexist){
-            return res.status(400).json({error: "Email already exists"});
+        if(userexist || usernumber){
+            return res.status(400).json({error: "User already exists, Please Login"});
         }
-        else if(usernumber){
-            return res.status(400).json({error: "Phone number already exists"});
-        }
+        // else if(usernumber){
+        //     return res.status(400).json({error: "Phone number already exists"});
+        // }
         else
         {
             const saltrounds=10;
             bcrypt.hash(password, saltrounds, async(err, hash)=>{
                 console.log(err);
                 await User.create({name, email, number, password: hash});
-                res.status(201).json({ message: "User created successfully"});
+                res.status(201).json({ message: "Successfuly signed up"});
             }) 
         }
     } catch(err){
