@@ -1,5 +1,6 @@
 const User=require('../models/user');
 const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
 
 exports.postsignup=async(req,res)=>{
     try{
@@ -25,5 +26,32 @@ exports.postsignup=async(req,res)=>{
         }
     } catch(err){
         res.status(500).json({error: err.message});
+    }
+}
+
+function webtoken(id){
+    return jwt.sign({ userId: id}, process.env.TOKEN_SECRET);
+}
+exports.postLogin=async(req,res)=>{
+    try{
+        const {email, password}=req.body;
+        const user=await User.findAll({ where: {email}});
+        if(user){
+            bcrypt.compare(password, user[0].password, (err,result)=>{
+                if(err){
+                    throw new Error("something went wrong");
+                }
+                if(result==true) {
+                    return res.json({ redirect: '/home', token: webtoken(user[0].id)});
+                }
+                else{
+                    res.status(401).json({error: "User not authorized"});
+                }
+            });
+        }
+        else{ res.status(404).json({error: "User not found"}); }
+    }
+    catch(err){
+        res.status(404).json({error: err.message});
     }
 }

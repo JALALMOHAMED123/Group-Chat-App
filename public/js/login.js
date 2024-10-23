@@ -5,11 +5,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
         const formdata=new FormData(loginform);
         const formserialized = new URLSearchParams(formdata).toString();
-
+        const errorMessage = document.getElementById('error-message');
         document.getElementById('error-message').textContent = '';
         axios.post('/login', formserialized) 
             .then(function(response){
-                alert(response.data.message);
                 loginform.reset();
                 const data = response.data;
                 if (data) {
@@ -18,10 +17,12 @@ document.addEventListener('DOMContentLoaded', function(){
                     window.location.href="/home.html";
                 }
             })
-            .catch(function(err){
-                const resErr = err.response && err.response.data;
-                const errMessage = resErr && resErr.err ? resErr.err : 'Error submitting form';
-                document.getElementById('error-message').textContent = errMessage;
+            .catch(function(error){
+                if (error.response && error.response.data.error) {
+                    errorMessage.textContent = error.response.data.error;
+                } else {
+                    alert('Error submitting form');
+                }
             });
     })
 })
