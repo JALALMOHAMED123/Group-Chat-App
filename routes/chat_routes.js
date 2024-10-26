@@ -7,4 +7,6 @@ router.get('/chat', userauth.authenticate, chatController.loadChat);
 
 router.post('/message', userauth.authenticate, chatController.createMessage);
 
+router.get('/messages', userauth.authenticate, chatController.getMessages);
+
 module.exports = router;
