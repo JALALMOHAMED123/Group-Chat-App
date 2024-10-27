@@ -3,9 +3,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const userRoutes = require('./routes/user_routes');
 const chatRoutes = require('./routes/chat_routes');
+const groupRoutes = require('./routes/group_routes');
+
 const sequelize = require('./util/db');
-const User=require('./models//user');
-const Message=require('./models/message');
+const User = require('./models/user');
+const Message = require('./models/message');
+const Group = require('./models/group');
+const GroupMember = require('./models/groupMember');
+const GroupMessage = require('./models/groupMessage');
 
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -24,6 +29,7 @@ app.get('/', (req, res) => {
 
 app.use(userRoutes);
 app.use(chatRoutes);
+app.use(groupRoutes);
 
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, `public/${req.url}`));
