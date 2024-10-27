@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Group chat</title>
 </head>
 <body>
     <div>
         <h2>Chat Window</h2>
+        <p id="username"></p> 
         <div id="usersList">
             <h3>Active Users</h3>
             <ul id="activeUsers"></ul>
@@ -18,7 +20,6 @@
             <button id="sendMessage">Send</button>
         </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="../js/chat.js"></script>
 </body>
 </html>

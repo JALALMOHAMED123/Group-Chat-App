@@ -1,51 +1,51 @@
-document.addEventListener('DOMContentLoaded', async function () {
-    const token = localStorage.getItem('token');
+const token = localStorage.getItem('token');
 
-    async function fetchActiveUsers() {
-        try {
-            const response = await axios.get('/chat', {
-                headers: { "Authorization": token }
-            });
-            var username = response.data.user.name;
-            document.getElementById('username').textContent = `Logged in as: ${username}`;
-        } catch (error) {
-            console.error('Error fetching active user:', error);
-        }
-    }
+function storeRecentMessagesInLocalStorage(messages) {
+  console.log('Storing recent messages in local storage:', messages);
+  const limitedMessages = messages.slice(-10); 
+  localStorage.setItem('messages', JSON.stringify(limitedMessages));
+}
 
-    async function fetchMessages() {
-        try {
-            const response = await axios.get('/messages', {
-                headers: { "Authorization": token }
-            });
-            const messagesDiv = document.getElementById('messages');
-            messagesDiv.innerHTML = ''; 
-            const users=response.data;
-
-            users.forEach(data => {
-                const messageElem = document.createElement('div');
-                messageElem.textContent = `${data.User.name}: ${data.content}`;
-                messagesDiv.appendChild(messageElem);
-            });
-        } catch (error) {
-            console.error('Error fetching messages:', error.message);
-        }
-    }
-
-    setInterval(fetchMessages, 1000);
-
-    fetchActiveUsers();
-
-    const sendMessageButton = document.getElementById('sendMessage');
-    const messageInput = document.getElementById('messageInput');
+async function displayAllMessages() {
+  console.log('Fetching and displaying all messages from the backend');
+  try {
+    const response = await axios.get('/messages', { headers: { "Authorization": token } });
+    const allMessages = response.data;
     
-    sendMessageButton.addEventListener('click', async () => {
-        const message = messageInput.value;
-        
-        await axios.post('/message', { message }, {
-            headers: { "Authorization": token }
-        });
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.innerHTML = ''; 
 
-        messageInput.value = '';
+    allMessages.forEach((message) => {
+      const messageElem = document.createElement('div');
+      messageElem.textContent = `${message.User.name || "You"}: ${message.content}`;
+      messagesDiv.appendChild(messageElem);
     });
+
+    storeRecentMessagesInLocalStorage(allMessages);
+
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+  }
+}
+
+async function sendMessage() {
+  const messageInput = document.getElementById('messageInput');
+  const message = messageInput.value;
+  try {
+    const response = await axios.post('/message', { message }, { headers: { "Authorization": token } });
+    console.log('Message sent:', response.data);
+    messageInput.value = ''; 
+
+    displayAllMessages();
+  } catch (error) {
+    console.error('Error sending message:', error.message);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('Page loaded');
+  displayAllMessages(); 
+
+  const sendMessageButton = document.getElementById('sendMessage');
+  sendMessageButton.addEventListener('click', sendMessage);
 });
