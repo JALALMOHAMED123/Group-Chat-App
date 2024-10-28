@@ -15,3 +15,9 @@ io.on('connection', socket => {
     delete users[socket.id]
   })
 })
+
+socket.on('file-shared', ({ senderId, fileUrl, originalName }) => {
+  const messageElem = document.createElement('div');
+  messageElem.innerHTML = `<strong>${senderId}:</strong> <a href="${fileUrl}" target="_blank">${originalName}</a>`;
+  document.getElementById('messages').appendChild(messageElem);
+});

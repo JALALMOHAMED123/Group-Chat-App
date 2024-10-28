@@ -111,13 +111,34 @@ async function addUserToGroup(groupId, searchQuery) {
     try {
         const response = await axios.post(`/group/${groupId}/addUser`, {
             searchQuery,
-            adminId: 
+            adminId
         }, {
             headers: { "Authorization": token }
         });
         console.log(response.data);
     } catch (error) {
         console.error(error.message);
+    }
+}
+
+async function uploadFile(groupId) {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const response = await axios.post(`/group/${groupId}/upload`, formData, {
+            headers: {
+                "Authorization": token,
+                "Content-Type": "multipart/form-data"
+            }
+        });
+        console.log("File uploaded:", response.data.fileUrl);
+    } catch (error) {
+        console.error("File upload failed:", error);
     }
 }
 

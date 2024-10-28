@@ -34,3 +34,15 @@ exports.getMessages = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.filesharing=[upload.single('file'), async (req, res) => {
+    const fileUrl = req.file.location; 
+    const groupId = req.params.groupId;
+    const senderId = req.user.id;
+
+    io.to(groupId).emit('file-shared', { senderId, fileUrl, originalName: req.file.originalname });
+
+    res.status(200).json({ fileUrl });
+}];
+
+module.exports = router;

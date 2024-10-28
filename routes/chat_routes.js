@@ -9,4 +9,6 @@ router.post('/message', userauth.authenticate, chatController.createMessage);
 
 router.get('/messages', userauth.authenticate, chatController.getMessages);
 
+router.post('/group/:groupId/upload', user.authenticate, chatController.filesharing);
+
 module.exports = router;
