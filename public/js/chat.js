@@ -142,3 +142,44 @@ async function uploadFile(groupId) {
     }
 }
 
+async function archiveOldMessages() {
+    try {
+        const oneDayAgo = new Date();
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
+        const oldMessages = await Chat.findAll({
+            where: {
+                createdAt: {
+                    [Op.lt]: oneDayAgo
+                }
+            }
+        });
+
+        const archiveData = oldMessages.map(message => ({
+            content: message.content,
+            UserId: message.UserId,
+            createdAt: message.createdAt,
+            updatedAt: message.updatedAt
+        }));
+
+        await ArchivedChat.bulkCreate(archiveData);
+
+        await Chat.destroy({
+            where: {
+                createdAt: {
+                    [Op.lt]: oneDayAgo
+                }
+            }
+        });
+
+        console.log('Archiving completed successfully.');
+    } catch (error) {
+        console.error('Error archiving messages:', error);
+    }
+}
+
+cron.schedule('0 0 * * *', () => {
+    console.log('Running the archive job');
+    archiveOldMessages();
+});
+

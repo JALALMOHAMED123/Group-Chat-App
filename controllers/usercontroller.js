@@ -42,7 +42,7 @@ exports.postLogin=async(req,res)=>{
                     throw new Error("something went wrong");
                 }
                 if(result==true) {
-                    return res.json({ redirect: '/home', token: webtoken(user[0].id)});
+                    return res.json({ redirect: '/chat.html', token: webtoken(user[0].id)});
                 }
                 else{
                     res.status(401).json({error: "User not authorized"});
