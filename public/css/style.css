@@ -1,0 +1,305 @@
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+
+  #sidebar {
+    width: 25%;
+    max-width: 325px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  #sidebar h2 {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+  }
+  /*search container start*/
+  #search-container {
+    position: relative;
+  }
+  
+  #search-container input {
+    height: 36px; 
+    width: 100%;
+    border-radius: 100px;
+    background-color: whitesmoke;
+    border: 2px solid #ccc; 
+    padding: 0 10px; 
+    box-sizing: border-box;
+  }
+  
+  #search-container input:focus, #action-container input:focus {
+    animation: blink-border 1s infinite;
+    outline: none;
+    border: 2px solid transparent; /* Fallback for initial state */
+  }
+
+  @keyframes blink-border {
+      0% {
+          border-color: rgb(0, 113, 255); /* Blue */
+      }
+      50% {
+          border-color: rgb(255, 0, 13); /* Red */
+      }
+      100% {
+          border-color: rgb(0, 255, 113); /* Green */
+      }
+  }
+
+  #search-container button {
+    height: 100%; 
+    aspect-ratio: 1/1;
+    background-color: #0071FF; 
+    border: none; 
+    border-radius: 50%; 
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
+  
+  #search-container button i {
+    font-size: 20px; 
+    color: white;
+  }
+  /******search container End****/
+  
+  #groupNames {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #groupNames li, #userList li{
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #555;
+  }
+
+  #groupNames li:hover {
+    background-color: #444;
+  }
+
+  #userList{
+    padding: 0px;
+    margin-bottom: 0;
+  }
+  #userList li {
+    list-style: none;
+
+  }
+
+  /* Main content area for messages */
+  #main-content {
+    flex-grow: 1;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    padding-bottom: 60px;
+  }
+
+/* Header styling */
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Selected group name styling */
+#selectedGroupName {
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Menu container positioning */
+#menu-container {
+  position: absolute;
+  right: -325px;
+}
+
+/* Menu icon styling */
+#menu-icon {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+/* Menu options styling (initially hidden) */
+#menu-options {
+  display: none;
+  position: absolute;
+  width: 130px;
+  top: 30px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Individual menu item styling */
+#menu-options div,ul{
+  margin: 0px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#menu-options div{
+  border-bottom: 1px solid #ccc;
+}
+/* Add border on the top of the Logout option */
+#logoutOption {
+  border-top: 1px solid #ccc;
+}
+
+  
+  #message-container {
+    width: 100%;
+    max-width: 800px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #message-container div {
+    background-color: #eee;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+
+  #message-container div:nth-child(2n) {
+    background-color: #ddd;
+  }
+  /*new html css*/
+  /* Style for the action container */
+#action-container {
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  padding: 10px;
+  gap: 10px;
+  border-top: 1px solid #ccc; /* Optional: Adds a divider */
+  background-color: #f9f9f9; /* Optional: Background color */
+}
+
+
+/* Style for buttons */
+#action-container button {
+  background-color: transparent;
+  border: none;
+  color: #555;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#action-container button:hover {
+  color: #007bff;
+}
+
+/* Style for file share icon */
+#file-share {
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+}
+
+#file-share:hover {
+  color: #007bff;
+}
+
+/* General styling for icons */
+#action-container i {
+  display: inline-block;
+  font-size: 18px;
+}
+
+  /* Input container for sending messages */
+  #send-container,#create-group-container {
+    border-radius: 100px;
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+    background-color: #f1f1f1;
+  }
+
+  #message-input {
+    border-radius: inherit;
+    border-color: #0071FF; 
+    padding: 8px;
+    width: 600px;
+    flex: 1; /* Allows the input field to grow */
+    font-size: 14px;
+  }
+
+  #send-button, #create-btn, #add-users-btn {
+    border-radius: 100px;
+    border-color: #0071FF; 
+    color: white;
+    background-color: #0071FF;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  #add-users-btn{
+    margin-left: 140px;
+  }
+  #groupNameInput {
+    border-radius: 100px;
+    border-color: #0071FF;
+    flex-grow: 1;
+    padding: 8px;
+    margin-right: 10px;
+  }
+
+  #group-users-menu {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    width: 180px;
+    top: 30px;
+    left: 250px;
+    z-index: 10;
+}
+
+#group-users-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#group-users-menu ul li {
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+#group-users-menu ul li button {
+    margin-left: 10px;
+}
+
+#group-users-menu ul li i {
+  font-size: 18px;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+#group-users-menu ul li i:hover {
+  color: #007bff;
+}
+

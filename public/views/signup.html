@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../css/Login_Signup_Style.css">
+
     <script src="./js/signup.js" defer></script>
 </head>
 <body>
@@ -21,15 +23,16 @@
         </div>
         <div class="form-group">
             <label for="number">Phone Number:</label>
-            <input type="tel" id="number" name="phnumber" required>
+            <input type="tel" id="number" name="phnumber" pattern="\d{10}" title="Phone number must be exactly 10 digits." required>
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Submit</button> | 
+            <a href="/login.html" class="btn btn-link">Login</a>
+        <div id="error-message"></div>
         </form>
-        <div id="error-message" class="text-danger mt-3"></div>
     </div>
 </body>
 </html>

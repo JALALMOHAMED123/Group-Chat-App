@@ -1,27 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>Group chat</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat App</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <script defer src="../js/chat.js"></script>
 </head>
 <body>
-    <div>
-        <h2>Chat Window</h2>
-        <div id="groupsList">
-            <h3>Groups</h3>
-            <ul id="groupNames"></ul>
-            <input type="text" id="groupNameInput" placeholder="New Group Name">
-            <button id="createGroup">Create Group</button>
-        </div>
-        <div id="chatBox">
-            <h4 id="selectedGroupName">Select a group to start chatting</h4>
-            <div id="messages"></div>
-            <input type="text" id="messageInput" placeholder="Type your message">
-            <button id="sendMessage">Send</button>
-        </div>
+  <div id="sidebar">
+    <div id="search-users-container" style="display: none;">
+      <div id="search-container">
+        <input type="text" id="search_user" name="search_user" placeholder="Search Name or Email or Phone number">
+        <button id="search-btn"><i class="fa fa-search"></i></button>
+      </div>
+      <ul id="userList"></ul>
+      <br id="search-break">
+      <button id="add-users-btn" style="display: none;">Add Users to Group</button>
+      <br id="search-break2">
     </div>
-    <script src="../js/chat.js"></script>      
+
+    <h2>Groups</h2>
+    <ul id="groupNames"></ul>
+    
+  </div>
+
+  <div id="main-content">
+    <div id="header">
+      <div id="selectedGroupName"></div>
+  
+      <div id="menu-container">
+          <div id="menu-icon">&#8942;</div>
+          <div id="menu-options">
+              <ul id="users-list" onclick="showGroupUsers()">Users List</ul>
+              <div id="logoutOption" onclick="logout()">Logout</div>
+          </div>
+      </div>
+      <div id="group-users-menu" class="hidden">
+      </div>
+    </div>
+  
+    <div id="message-container"></div>
+
+    <form id="action-container">
+        <input type="text" id="message-input" placeholder="Type a message" required title="Please type something...">
+        <button type="submit" id="send-button">
+          <i class="fa fa-paper-plane"></i>
+        </button>
+
+        <label for="fileInput" id="file-share">
+          <i class="fa fa-paperclip" title="Send File"></i>
+        </label>
+        
+        <input type="file" id="fileInput" style="display: none;">
+        
+        <button type="button" id="create-btn">
+          <i class="fa fa-users" title="Create group"></i>
+        </button>    
+          
+        <button type="button" id="share_group">
+          <i class="fa fa-share-alt" title="Share group"></i>
+        </button>
+    </form>
+    
+  </div>
 </body>
 </html>

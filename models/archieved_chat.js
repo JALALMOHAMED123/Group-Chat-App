@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../util/db');
-const User = require('user.js'); 
 
 const ArchivedChat = sequelize.define('ArchivedChat', {
     id: {
@@ -12,20 +11,20 @@ const ArchivedChat = sequelize.define('ArchivedChat', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    UserId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: User,
-            key: 'id'
-        }
-    },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false
     },
     updatedAt: {
         type: DataTypes.DATE,
+        allowNull: false
+    },
+    GroupId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    UserId: {
+        type: DataTypes.INTEGER,
         allowNull: false
     }
 });

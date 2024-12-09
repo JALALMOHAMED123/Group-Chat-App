@@ -12,9 +12,6 @@ exports.postsignup=async(req,res)=>{
         if(userexist || usernumber){
             return res.status(400).json({error: "User already exists, Please Login"});
         }
-        // else if(usernumber){
-        //     return res.status(400).json({error: "Phone number already exists"});
-        // }
         else
         {
             const saltrounds=10;
@@ -49,9 +46,8 @@ exports.postLogin=async(req,res)=>{
                 }
             });
         }
-        else{ res.status(404).json({error: "User not found"}); }
     }
     catch(err){
-        res.status(404).json({error: err.message});
+        res.status(404).json({error: "User not found"});
     }
 }

@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 const data = response.data;
                 if (data) {
                     localStorage.setItem("token", data.token);
-                    console.log("token", data.token);
-                    window.location.href="/home.html";
+                    console.log("token", data.token);  
+                    window.location.href="/chat.html";
                 }
             })
             .catch(function(error){

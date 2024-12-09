@@ -1,48 +1,31 @@
-const Message = require('../models/message');
 const User = require('../models/user');
+const {Op} = require('sequelize');
 
-exports.loadChat = async (req, res) => {
-    try {
-        const user = await User.findOne({ where: { id: req.user.id } });
-        res.status(200).json({ user });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+exports.searchUser=async(req,res)=>{
+    const searchInput=req.params.searchInput.trim();
+    try{
+        let condition={};
+        if(!isNaN(searchInput) && searchInput!==''){
+            condition={number: { [Op.like]: `%${searchInput}%`, }}
+        }
+        else if(searchInput.includes('@') && searchInput.includes('.')){
+            condition={email: { [Op.like]: `%${searchInput}%`, }}
+        }
+        else{
+            condition={name: { [Op.like]: `%${searchInput}%`, }}
+        }
+        const users=await User.findAll({where: condition});
+        res.status(200).json({users});
     }
-};
-
-exports.createMessage = async (req, res) => {
-    const { message } = req.body;
-    try {
-        const savedMessage = await Message.create({
-            content: message,
-            UserId: req.user.id 
-        });
-        res.status(201).json(savedMessage); // Respond with the created message
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    catch(err){
+        res.status(500).json({ error: err.message});
     }
-};
+}
 
-exports.getMessages = async (req, res) => {
-    try {
-        const messages = await Message.findAll({
-            include: [{ model: User, attributes: ['name'] }],
-            order: [['createdAt', 'ASC']]
-        });
-        res.status(200).json(messages);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+exports.getUser=async(req,res)=>{
+    try{
+        const username=req.user.name;
+        return res.status(200).json({ username, id: req.user.id});
     }
-};
-
-exports.filesharing=[upload.single('file'), async (req, res) => {
-    const fileUrl = req.file.location; 
-    const groupId = req.params.groupId;
-    const senderId = req.user.id;
-
-    io.to(groupId).emit('file-shared', { senderId, fileUrl, originalName: req.file.originalname });
-
-    res.status(200).json({ fileUrl });
-}];
-
-module.exports = router;
+    catch(err){ req.status(500).json({ error: err.message})};
+}
